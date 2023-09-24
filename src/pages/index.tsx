@@ -1,14 +1,20 @@
-import { Inter } from "next/font/google";
-import Head from "next/head";
+import { categories } from '@/data/category.mock'
+import { GetServerSideProps, NextPage } from 'next'
 
-const inter = Inter({ subsets: ["latin"] });
+const Home: NextPage = () => {
+  return <></>
+}
 
-export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>Notes App</title>
-      </Head>
-    </>
-  );
+export default Home
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const category = categories.find(category => category.slug === 'all')
+
+  return {
+    props: {},
+    redirect: {
+      destination: category?.link,
+      permanent: true
+    }
+  }
 }
