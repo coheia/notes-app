@@ -1,2 +1,1 @@
-import Home from '@/pages'
-export default Home
+export { default, getServerSideProps } from '@/pages'
