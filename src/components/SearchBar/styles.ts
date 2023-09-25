@@ -6,6 +6,9 @@ export const Wrapper = styled('div')`
   box-shadow: 0px 3px 6px #00000029;
   width: 100%;
   padding: 11px 19px;
+  background-color: white;
+  box-sizing: border-box;
+  grid-area: s;
 `
 
 export const SearchInput = styled(Input)`

@@ -2,10 +2,11 @@ import styled from '@emotion/styled'
 import { Button } from '@mui/material'
 
 export const Item = styled(Button)`
-  padding: 8px 35px;
+  padding: 2px 35px;
   font-size: 16px;
   display: flex;
   flex-direction: column;
+  text-transform: none;
 
   i {
     border-radius: 100%;
