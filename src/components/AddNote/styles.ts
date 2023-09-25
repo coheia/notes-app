@@ -5,4 +5,8 @@ export const Wrapper = styled('div')`
   display: flex;
   justify-content: flex-end;
   grid-area: a;
+
+  @media (max-width: 900px) {
+    justify-content: center;
+  }
 `

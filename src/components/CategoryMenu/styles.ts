@@ -5,4 +5,10 @@ export const Wrapper = styled('div')`
   gap: 10px;
   display: flex;
   grid-area: c;
+  max-width: 100%;
+
+  @media (max-width: 900px) {
+    flex-direction: row;
+    justify-content: center;
+  }
 `

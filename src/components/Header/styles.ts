@@ -6,4 +6,11 @@ export const Header = styled('header')`
   grid-template-areas:
     's s s s s'
     'c c c c a';
+
+  @media (max-width: 900px) {
+    grid-template-areas:
+      's s s s s'
+      'c c c c c'
+      'a a a a a';
+  }
 `
