@@ -3,7 +3,7 @@ import Header from '@/components/Header/Header'
 import LoadingNotes from '@/components/ListNotes/Loading'
 import { categories } from '@/data/category.mock'
 import { type Category } from '@/data/models/Category'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 
@@ -38,7 +38,7 @@ const SingleCategory: NextPage<SingleCategoryProps> = ({ category }) => {
 
 export default SingleCategory
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug
   const category = categories.find(category => category.slug === slug)
 
@@ -47,4 +47,18 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       category: category ? JSON.parse(JSON.stringify(category)) : null
     }
   }
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths: any[] = []
+
+  categories.forEach(category => {
+    paths.push({
+      params: {
+        slug: category.slug
+      }
+    })
+  })
+
+  return { paths, fallback: 'blocking' }
 }
