@@ -1,9 +1,9 @@
 import { categories } from '@/data/category.mock'
-import { type CategorySlug } from '@/data/models/Category'
 import { Note, type NewNode } from '@/data/models/Note'
 import { NotesContext } from '@/data/repositories/Notes'
 import {
   Button,
+  IconButton,
   MenuItem,
   Modal,
   Select,
@@ -11,16 +11,18 @@ import {
   Typography,
   type ButtonProps
 } from '@mui/material'
-import React, { useContext, useState } from 'react'
+import React, { ReactNode, useContext, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as S from './styles'
 
 interface SaveNoteModalProps extends ButtonProps {
-  categorySlug?: CategorySlug
+  note?: Note
+  btnIcon?: ReactNode
 }
 
 const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
-  categorySlug,
+  note,
+  btnIcon,
   ...buttonProps
 }) => {
   const notes = useContext(NotesContext)
@@ -28,14 +30,26 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors }
   } = useForm<NewNode>()
 
   const onSubmit: SubmitHandler<NewNode> = data => {
-    const note = new Note(data)
-    notes.add(note)
+    const newNote = new Note(data)
+    if (isUpdateMode) {
+      const updatedNote = {
+        ...new Note(data),
+        id: note?.id,
+        created: note?.created,
+        createdFormated: note?.createdFormated
+      }
+
+      console.log('===> updatedNote:', updatedNote)
+
+      notes.update(updatedNote as Note)
+    } else {
+      notes.add(newNote)
+    }
     handleClose()
   }
 
@@ -48,11 +62,15 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
     reset()
   }
 
-  const isUpdateMode = Boolean(categorySlug)
+  const isUpdateMode = Boolean(note)
 
   return (
     <S.Wrapper>
-      <Button {...buttonProps} onClick={handleOpen} />
+      {btnIcon ? (
+        <IconButton onClick={handleOpen}>{btnIcon}</IconButton>
+      ) : (
+        <Button {...buttonProps} onClick={handleOpen} />
+      )}
 
       <Modal
         open={open}
@@ -73,7 +91,7 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
                   placeholder="Add title..."
                   className="text-field"
                   required={true}
-                  defaultValue={''}
+                  defaultValue={isUpdateMode ? note?.title : ''}
                   fullWidth
                   {...register('title')}
                 />
@@ -81,9 +99,7 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
                   placeholder="Add description..."
                   className="text-field"
                   required={true}
-                  defaultValue={
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id dui in ex aliquet fermentum eu id libero. Fusce orci elit, fermentum a suscipit quis, ultrices ac metus. Suspendisse hendrerit elementum vehicula. Vivamus tincidunt dui elit, quis sollicitudin ipsum porttitor sit amet. Nunc in turpis non sapien hendrerit vehicula sed vitae magna. Nullam quis mi ut massa commodo aliquet. Nam tincidunt neque ac enim ornare, sed venenatis lacus ullamcorper. Nulla ac urna massa. Suspendisse ut vehicula neque, sed placerat odio. Pellentesque ut risus odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec porta eros ut erat dignissim, ac lobortis ex sagittis. Nulla finibus cursus tellus consequat gravida. Etiam feugiat purus turpis. Integer arcu turpis, mollis nec quam vel, molestie vestibulum justo. Etiam mattis eu enim a eleifend. Pellentesque sit amet viverra augue. Curabitur scelerisque ante in tristique sagittis. Cras nisi ante, auctor quis porta vitae, malesuada sit amet tellus.'
-                  }
+                  defaultValue={isUpdateMode ? note?.description : ''}
                   multiline
                   rows={9}
                   fullWidth
@@ -93,7 +109,7 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
               <S.Right>
                 <Select
                   placeholder="Select Category"
-                  defaultValue={''}
+                  defaultValue={isUpdateMode ? note?.category?.slug : ''}
                   required={true}
                   displayEmpty
                   inputProps={{
@@ -104,11 +120,13 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
                   <MenuItem value="">
                     <em>Select Category</em>
                   </MenuItem>
-                  {categories.map(({ slug, name }) => (
-                    <MenuItem key={slug} value={slug}>
-                      {name}
-                    </MenuItem>
-                  ))}
+                  {categories
+                    .filter(cat => cat.slug !== 'all')
+                    .map(({ slug, name }) => (
+                      <MenuItem key={slug} value={slug}>
+                        {name}
+                      </MenuItem>
+                    ))}
                 </Select>
               </S.Right>
             </S.InputNote>
@@ -119,7 +137,7 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
               Cancel
             </Button>
             <Button type="submit" form="input-note" variant="text">
-              Add
+              {isUpdateMode ? 'Update' : 'Add'}
             </Button>
           </S.ModalFooter>
         </S.ModalContainer>

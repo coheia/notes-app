@@ -5,6 +5,7 @@ import React, { ReactNode, useState } from 'react'
 interface NotesHook {
   add: (note: Note) => void
   remove: (noteId: NoteId) => void
+  update: (newNote: Note) => void
   list: Note[]
 }
 
@@ -12,7 +13,7 @@ export function useNotes(): NotesHook {
   const [list, setList] = useState<Note[]>(getNotesFromStorage())
 
   function add(note: Note): void {
-    const listUpdated = [...list, note]
+    const listUpdated = list ? [...list, note] : [note]
     setList(listUpdated)
     ls('notes', listUpdated)
   }
@@ -23,9 +24,18 @@ export function useNotes(): NotesHook {
     ls('notes', listUpdated)
   }
 
+  function update(newNote: Note): void {
+    const list = getNotesFromStorage()
+    const noteIndex = list.findIndex(note => note.id === newNote.id)
+    list[noteIndex] = newNote
+    setList(list)
+    ls('notes', list)
+  }
+
   return {
     add,
     remove,
+    update,
     list
   }
 }
@@ -41,6 +51,7 @@ export const getNotesFromStorage = () => {
 export const NotesContext = React.createContext<NotesHook>({
   add: () => {},
   remove: () => {},
+  update: () => {},
   list: getNotesFromStorage()
 })
 

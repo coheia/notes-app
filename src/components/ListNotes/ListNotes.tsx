@@ -4,6 +4,8 @@ import React, { useContext } from 'react'
 import * as S from './styles'
 import { NotesContext } from '@/data/repositories/Notes'
 import { CategorySlug } from '@/data/models/Category'
+import { Container } from '@mui/material'
+import CardNote from '../CardNote/CardNote'
 
 interface ListNotesProps {
   byCategory?: CategorySlug
@@ -12,29 +14,27 @@ interface ListNotesProps {
 const ListNotes: React.FC<ListNotesProps> = ({ byCategory }) => {
   const notes = useContext(NotesContext)
 
-  const notesByCategory = notes.list.filter(
+  const notesByCategory = notes.list?.filter(
     note => note.category?.slug === byCategory
   )
 
-  console.log('===> notesByCategory:', notesByCategory)
+  const list = byCategory === 'all' ? notes.list : notesByCategory
+
+  console.log('===> list2:', list)
 
   return (
     <S.Wrapper>
-      <ul id="lista-notes">
-        {(notesByCategory || notes.list).length > 0 ? (
-          <>
-            {(notesByCategory || notes.list)?.map(note => {
-              return (
-                <li key={note.id}>
-                  <h3>{note.title}</h3>
-                </li>
-              )
-            })}
-          </>
+      <Container fixed>
+        {list?.length > 0 ? (
+          <S.ListNotes>
+            {list?.map(note => (
+              <CardNote key={note.id} note={note} />
+            ))}
+          </S.ListNotes>
         ) : (
           'Nenhuma nota encontrada'
         )}
-      </ul>
+      </Container>
     </S.Wrapper>
   )
 }
