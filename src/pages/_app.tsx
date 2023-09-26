@@ -1,3 +1,4 @@
+import { NotesProvider } from '@/data/repositories/Notes'
 import type { AppProps } from 'next/app'
 import { Roboto } from 'next/font/google'
 
@@ -9,7 +10,9 @@ const roboto = Roboto({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={roboto.className}>
-      <Component {...pageProps} />
+      <NotesProvider>
+        <Component {...pageProps} />
+      </NotesProvider>
     </main>
   )
 }
