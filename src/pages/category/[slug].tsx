@@ -1,4 +1,3 @@
-import CategoryNotFound from '@/components/CategoryNotFound/CategoryNotFound'
 import Header from '@/components/Header/Header'
 import LoadingNotes from '@/components/ListNotes/Loading'
 import NotFound from '@/components/NotFound/NotFound'
