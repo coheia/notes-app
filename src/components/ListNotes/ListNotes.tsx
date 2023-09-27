@@ -5,13 +5,15 @@ import * as S from './styles'
 import { NotesContext } from '@/data/repositories/Notes'
 import { CategorySlug } from '@/data/models/Category'
 import { Container } from '@mui/material'
-import CardNote from '../CardNote/CardNote'
+import CardNote from '@/components/CardNote/CardNote'
+import NotFound from '@/components/NotFound/NotFound'
 
 interface ListNotesProps {
   byCategory?: CategorySlug
+  byTerm?: string
 }
 
-const ListNotes: React.FC<ListNotesProps> = ({ byCategory }) => {
+const ListNotes: React.FC<ListNotesProps> = ({ byCategory, byTerm }) => {
   const notes = useContext(NotesContext)
 
   const notesByCategory = notes.list?.filter(
@@ -19,8 +21,6 @@ const ListNotes: React.FC<ListNotesProps> = ({ byCategory }) => {
   )
 
   const list = byCategory === 'all' ? notes.list : notesByCategory
-
-  console.log('===> list2:', list)
 
   return (
     <S.Wrapper>
@@ -32,7 +32,19 @@ const ListNotes: React.FC<ListNotesProps> = ({ byCategory }) => {
             ))}
           </S.ListNotes>
         ) : (
-          'Nenhuma nota encontrada'
+          <>
+            {notes.list?.length === 0 ? (
+              <NotFound
+                title="You don't have any notes"
+                asset="/add-note-illustration.svg"
+              />
+            ) : (
+              <NotFound
+                title="Couldn’t find any notes"
+                asset="/search-image.svg"
+              />
+            )}
+          </>
         )}
       </Container>
     </S.Wrapper>

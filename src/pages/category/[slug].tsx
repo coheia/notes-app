@@ -1,6 +1,7 @@
 import CategoryNotFound from '@/components/CategoryNotFound/CategoryNotFound'
 import Header from '@/components/Header/Header'
 import LoadingNotes from '@/components/ListNotes/Loading'
+import NotFound from '@/components/NotFound/NotFound'
 import { categories } from '@/data/category.mock'
 import { type Category } from '@/data/models/Category'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
@@ -30,7 +31,7 @@ const SingleCategory: NextPage<SingleCategoryProps> = ({ category }) => {
       {category ? (
         <ListNotes byCategory={category.slug} />
       ) : (
-        <CategoryNotFound />
+        <NotFound title="Category not found" asset="/search-image.svg" />
       )}
     </>
   )
