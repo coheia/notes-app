@@ -44,8 +44,6 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
         createdFormated: note?.createdFormated
       }
 
-      console.log('===> updatedNote:', updatedNote)
-
       notes.update(updatedNote as Note)
     } else {
       notes.add(newNote)

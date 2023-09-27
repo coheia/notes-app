@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useContext } from 'react'
-import * as S from './styles'
-import { NotesContext } from '@/data/repositories/Notes'
-import { CategorySlug } from '@/data/models/Category'
-import { Container } from '@mui/material'
 import CardNote from '@/components/CardNote/CardNote'
 import NotFound from '@/components/NotFound/NotFound'
+import { CategorySlug } from '@/data/models/Category'
+import { NotesContext } from '@/data/repositories/Notes'
+import { Container } from '@mui/material'
+import React, { useContext } from 'react'
+import slug from 'slug'
+import * as S from './styles'
 
 interface ListNotesProps {
   byCategory?: CategorySlug
@@ -20,7 +21,12 @@ const ListNotes: React.FC<ListNotesProps> = ({ byCategory, byTerm }) => {
     note => note.category?.slug === byCategory
   )
 
-  const list = byCategory === 'all' ? notes.list : notesByCategory
+  const listByCategory = byCategory === 'all' ? notes.list : notesByCategory
+  const listBySearch = byTerm
+    ? notes.list?.filter(n => slug(n.title).includes(slug(byTerm)))
+    : []
+
+  const list = byCategory ? listByCategory : listBySearch
 
   return (
     <S.Wrapper>

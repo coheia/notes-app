@@ -5,6 +5,7 @@ import { Paper } from '@mui/material'
 export const Card = styled(Paper)`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 12px;
   padding: 16px;
   color: white;

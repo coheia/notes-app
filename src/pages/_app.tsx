@@ -1,3 +1,4 @@
+import Header from '@/components/Header/Header'
 import { NotesProvider } from '@/data/repositories/Notes'
 import type { AppProps } from 'next/app'
 import { Roboto } from 'next/font/google'
@@ -11,6 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={roboto.className}>
       <NotesProvider>
+        <Header />
         <Component {...pageProps} />
       </NotesProvider>
     </main>

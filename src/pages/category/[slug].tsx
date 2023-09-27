@@ -1,4 +1,3 @@
-import Header from '@/components/Header/Header'
 import LoadingNotes from '@/components/ListNotes/Loading'
 import NotFound from '@/components/NotFound/NotFound'
 import { categories } from '@/data/category.mock'
@@ -24,8 +23,6 @@ const SingleCategory: NextPage<SingleCategoryProps> = ({ category }) => {
       <Head>
         <title>{title}</title>
       </Head>
-
-      <Header />
 
       {category ? (
         <ListNotes byCategory={category.slug} />
