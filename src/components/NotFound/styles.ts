@@ -7,6 +7,7 @@ export const Wrapper = styled('div')`
   align-items: center;
   margin-top: 56px;
   width: 100%;
+  padding-bottom: 56px;
 
   .title {
     color: #00000070;

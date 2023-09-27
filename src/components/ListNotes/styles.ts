@@ -3,7 +3,9 @@ import { Container } from '@mui/material'
 
 export const gapListNotes = '16px'
 
-export const Wrapper = styled('div')``
+export const Wrapper = styled('div')`
+  padding-bottom: 56px;
+`
 export const ListNotes = styled('div')`
   display: grid;
   grid-template-columns: 1fr 1fr;
