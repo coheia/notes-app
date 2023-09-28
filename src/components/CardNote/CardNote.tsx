@@ -54,6 +54,7 @@ const CardNote: React.FC<CardNoteProps> = ({ note }) => {
 
   return (
     <S.Card
+      id={`card-note-${note.id}`}
       className={checked ? 'done' : ''}
       style={{ backgroundColor: note.category?.color || 'white' }}
     >
@@ -71,12 +72,19 @@ const CardNote: React.FC<CardNoteProps> = ({ note }) => {
           }}
         />
         <label htmlFor={`done-${note.id}`}>
-          <Typography className="title">{note.title}</Typography>
+          <Typography className="title" id={`card-title-${note.id}`}>
+            {note.title}
+          </Typography>
         </label>
 
         <div className="icons">
           <SaveNoteModal
-            btnIcon={<EditIcon sx={{ color: 'white' }} />}
+            btnIcon={
+              <EditIcon
+                id={`button-update-note-${note.id}`}
+                sx={{ color: 'white' }}
+              />
+            }
             note={note}
           />
 
@@ -125,7 +133,9 @@ const CardNote: React.FC<CardNoteProps> = ({ note }) => {
       </S.Header>
 
       <S.Body>
-        <Typography className="description">{note.shortDescription}</Typography>
+        <Typography id={`card-description-${note.id}`} className="description">
+          {note.shortDescription}
+        </Typography>
       </S.Body>
 
       <S.Footer>

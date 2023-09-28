@@ -92,10 +92,10 @@ export const InputNote = styled('form')`
     .MuiInputBase-root,
     &.MuiSelect-select {
       background-color: #f4f4f4;
-      border: 0;
+      /* border: 0; */
     }
   }
   .MuiOutlinedInput-notchedOutline {
-    border: 0;
+    /* border: 0; */
   }
 `

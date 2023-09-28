@@ -9,7 +9,11 @@ interface AddNoteProps {}
 const AddNote: React.FC<AddNoteProps> = () => {
   return (
     <S.Wrapper>
-      <SaveNoteModal variant="contained" startIcon={<AddIcon />}>
+      <SaveNoteModal
+        id="button-add-more"
+        variant="contained"
+        startIcon={<AddIcon />}
+      >
         Add Note
       </SaveNoteModal>
     </S.Wrapper>

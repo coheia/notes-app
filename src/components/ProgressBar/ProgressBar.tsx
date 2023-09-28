@@ -16,7 +16,7 @@ const ProgressBar: React.FC<ProgressBarProps> = () => {
     <S.Wrapper>
       {total > 0 ? (
         <>
-          <S.ProgressBarLabel>
+          <S.ProgressBarLabel id="progress-bar-text">
             {current === total
               ? 'You have completed all notes'
               : `You have ${current}/${total} notes completed`}

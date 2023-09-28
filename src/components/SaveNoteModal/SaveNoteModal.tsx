@@ -39,6 +39,7 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
     if (isUpdateMode) {
       const updatedNote = {
         ...new Note(data),
+        done: note?.done,
         id: note?.id,
         created: note?.created,
         createdFormated: note?.createdFormated
@@ -86,6 +87,7 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
             <S.InputNote id="input-note" onSubmit={handleSubmit(onSubmit)}>
               <S.Left>
                 <TextField
+                  id="note-title-input"
                   placeholder="Add title..."
                   className="text-field"
                   required={true}
@@ -94,6 +96,7 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
                   {...register('title')}
                 />
                 <TextField
+                  id="note-description-input"
                   placeholder="Add description..."
                   className="text-field"
                   required={true}
@@ -106,6 +109,7 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
               </S.Left>
               <S.Right>
                 <Select
+                  id="note-category-input"
                   placeholder="Select Category"
                   defaultValue={isUpdateMode ? note?.category?.slug : ''}
                   required={true}
@@ -134,7 +138,12 @@ const SaveNoteModal: React.FC<SaveNoteModalProps> = ({
             <Button variant="text" onClick={handleClose}>
               Cancel
             </Button>
-            <Button type="submit" form="input-note" variant="text">
+            <Button
+              id={`button-${isUpdateMode ? 'update' : 'add'}`}
+              type="submit"
+              form="input-note"
+              variant="text"
+            >
               {isUpdateMode ? 'Update' : 'Add'}
             </Button>
           </S.ModalFooter>
