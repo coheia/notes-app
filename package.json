@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "lint": "next lint"
   },
   "dependencies": {
@@ -27,6 +29,7 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
+    "cypress": "^13.3.0",
     "@types/slug": "^5.0.4"
   }
 }

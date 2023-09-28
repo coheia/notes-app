@@ -1,0 +1,50 @@
+import { createNote } from '../utils/createNote'
+import { openModalAddNote } from '../utils/openModalAddNote'
+
+describe('should add one note in each category', () => {
+  beforeEach(() => {
+    openModalAddNote()
+  })
+  it('should add note in work category', () => {
+    createNote('w')
+  })
+  it('should add note in personal category', () => {
+    createNote('perso')
+  })
+  it('should add note in home category', () => {
+    createNote('home')
+  })
+  it('should add notes in each category', () => {
+    createNote('home')
+    openModalAddNote()
+    createNote('perso')
+    openModalAddNote()
+    createNote('w')
+    openModalAddNote()
+    createNote('home')
+    openModalAddNote()
+    createNote('perso')
+    openModalAddNote()
+    createNote('w')
+    openModalAddNote()
+    createNote('perso')
+    openModalAddNote()
+    createNote('w')
+    openModalAddNote()
+    createNote('home')
+    openModalAddNote()
+    createNote('perso')
+    openModalAddNote()
+    createNote('w')
+    openModalAddNote()
+    createNote('perso')
+    openModalAddNote()
+    createNote('w')
+    openModalAddNote()
+    createNote('home')
+    openModalAddNote()
+    createNote('perso')
+    openModalAddNote()
+    createNote('w')
+  })
+})
